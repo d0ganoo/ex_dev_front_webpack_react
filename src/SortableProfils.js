@@ -5,48 +5,41 @@ class SortableProfils extends React.Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			sortOrder: true,
-			sortedProfils: []
+			sortOrder: true
 		};
 	}
 
 	sortAsc(profils, name){
-		if(isNaN(parseFloat(profils[0][name])) === false){
-			this.sortedProfils = profils.sort((a, b) => a[name] - b[name]);
-		}
-		else{
-			this.sortedProfils = profils.sort((a, b) => a[name].localeCompare(b[name]));
-		}
+		return isNaN(parseFloat(profils[0][name])) === false ? 
+			profils.sort((a, b) => a[name] - b[name]) : 
+			profils.sort((a, b) => a[name].localeCompare(b[name]));
 	}
 
 	sortDesc(profils, name){
-		if(isNaN(parseFloat(profils[0][name])) === false){
-			this.sortedProfils = profils.sort((a, b) => b[name] - a[name]);
-		}
-		else{
-			this.sortedProfils = profils.sort((a, b) => b[name].localeCompare(a[name]));
-		}
+		return isNaN(parseFloat(profils[0][name])) === false ? 
+			profils.sort((a, b) => b[name] - a[name]) : 
+			profils.sort((a, b) => b[name].localeCompare(a[name]));
 	}
 
 	sort(profils, name){
-		if (this.state.sortOrder == true){
-			this.state.sortedProfils = this.sortAsc(profils, name);
+		if (this.state.sortOrder === true){
+			this.sortAsc(profils, name);
 			this.setState({sortOrder:false});
 		}
 		else{
-			this.state.sortedProfils = this.sortDesc(profils, name);
+			this.sortDesc(profils, name);
 			this.setState({sortOrder:true});
 		}
-		this.props.sortProfils(profils);
+		this.props.reloadProfils(profils);
 	}
 
 	render(){
 		return (
 			<tr>
 				<th>Picture</th>
-				<th class="sortable" onClick={() => this.sort(this.props.profils, "lastname")}>Lastname</th>
-				<th class="sortable" onClick={() => this.sort(this.props.profils, "firstname")}>Firstname</th>
-				<th class="sortable" onClick={() => this.sort(this.props.profils, "balance")}>Balance</th>
+				<th  onClick={() => this.sort(this.props.profils, "lastname")}>Lastname</th>
+				<th  onClick={() => this.sort(this.props.profils, "firstname")}>Firstname</th>
+				<th  onClick={() => this.sort(this.props.profils, "balance")}>Balance</th>
 			</tr>
 		);
 	}

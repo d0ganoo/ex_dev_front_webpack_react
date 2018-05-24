@@ -12,10 +12,9 @@ class Controller extends React.Component{
 		Store.getProfils().then((profils) => {
 			this.setState({profils: profils});
 		});
-		this.sortProfils = this.sortProfils.bind(this);
 	}
 
-	sortProfils(profils){
+	reloadProfils(profils){
 		this.setState({profils: profils});
 	}
 
@@ -23,7 +22,7 @@ class Controller extends React.Component{
 		return(
 			<div>
 				<table>
-					<SortableProfils profils={this.state.profils} sortProfils={(profils) => this.sortProfils(profils)} />
+					<SortableProfils profils={this.state.profils} reloadProfils={(profils) => this.reloadProfils(profils)} />
 					<DisplayProfils profils={this.state.profils} />
 				</table>
 			</div>
