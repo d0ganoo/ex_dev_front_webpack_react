@@ -18,9 +18,17 @@ class Controller extends React.Component{
 		this.setState({profils: profils});
 	}
 
+	handlechange(event){
+		console.log(event.target.value);
+	}	
+
 	render(){
 		return(
 			<div>
+				<label>
+					Rechecher:
+					<input type="text" onChange={(e)=>this.handlechange(e)}/>
+				</label>
 				<table>
 					<SortableProfils profils={this.state.profils} reloadProfils={(profils) => this.reloadProfils(profils)} />
 					<DisplayProfils profils={this.state.profils} />
