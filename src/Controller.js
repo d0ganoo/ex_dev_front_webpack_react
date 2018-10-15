@@ -2,15 +2,21 @@ import React from 'react';
 import Store from './Store';
 import DisplayProfils from './DisplayProfils';
 import SortableProfils from './SortableProfils';
+import FilterProfils from './FilterProfils';
 
 class Controller extends React.Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			profils: []
+			profils: [],
+			filteredTab:[]
 		};
+		this.getData();
+	}
+
+	getData(){
 		Store.getProfils().then((profils) => {
-			this.setState({profils: profils});
+			this.setState({profils: profils, filteredTab: profils});
 		});
 	}
 
@@ -18,20 +24,19 @@ class Controller extends React.Component{
 		this.setState({profils: profils});
 	}
 
-	handlechange(event){
-		console.log(event.target.value);
-	}	
+	reloadFilterProfils(profils){
+		this.setState({filteredTab:profils})
+	}
 
 	render(){
 		return(
 			<div>
-				<label>
-					Rechecher:
-					<input type="text" onChange={(e)=>this.handlechange(e)}/>
-				</label>
+				<FilterProfils profils={this.state.profils} reloadFilterProfils={(profils) => this.reloadFilterProfils(profils)}/>
 				<table>
-					<SortableProfils profils={this.state.profils} reloadProfils={(profils) => this.reloadProfils(profils)} />
-					<DisplayProfils profils={this.state.profils} />
+				<tbody>
+					<SortableProfils profils={this.state.filteredTab} reloadProfils={(profils) => this.reloadProfils(profils)} />
+					<DisplayProfils profils={this.state.filteredTab} />
+				</tbody>
 				</table>
 			</div>
 		);
