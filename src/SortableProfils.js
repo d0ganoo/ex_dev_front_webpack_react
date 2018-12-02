@@ -46,4 +46,9 @@ class SortableProfils extends React.Component{
 
 }
 
+SortableProfils.propTypes = {
+		profils: PropTypes.array.isRequired,
+		reloadProfils: PropTypes.func.isRequired
+}
+
 export default SortableProfils;
